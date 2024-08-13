@@ -7,6 +7,8 @@
 ## 1.2 Express가 좋을까, NestJS가 좋을까
 
 ## 1.3 NestJS 설치
-- ``` npm i -g @nestjs/cli 
+> npm i -g @nestjs/cli 
+> nest new project-name
+
 
 ## 1.4 책에서 만들 애플리케이션: 유저 서비스
