@@ -3,6 +3,15 @@
 # CHAP1. Hello NestJS
 ## 1.1 NestJS의 장점
 - CQRS, 인터셉터, 미들웨어
+---
+from. sunman
+- Express(main), Fastify를 래핑
+- Express의 단점
+  - 일정하지 않은 소프트웨어 품질
+  - 라이브러리 검색 부담
+- NestJS의 특징
+  - 모듈/컴포넌트 기반, IoC, DI, AOP, Typescript
+---
 ```
 - CQRS
 CQRS는 Command Query Responsibility Segregation의 약자로, 명령(Command)과 조회(Query)의 책임을 분리하는 아키텍처 패턴입니다. 아래는 CQRS의 주요 특징과 장점입니다:
@@ -21,6 +30,7 @@ Query: 데이터 조회 작업을 처리하며, 읽기 전용 모델로 단순�
 
 CQRS는 특히 복잡한 도메인 로직을 처리하거나 성능과 확장성이 중요한 시스템에서 유용하게 사용됩니다.
 ```
+
 ## 1.2 Express가 좋을까, NestJS가 좋을까
 ```
 - SSR
@@ -45,10 +55,19 @@ SSR을 구현하는 대표적인 프레임워크로는 Next.js(React 기반), Nu
 > nset start --watch
 
 ## 1.4 책에서 만들 애플리케이션: 유저 서비스
+---
+from. sunman
+- 환경 변수 설정, 요청 유효성 검사, 인증
+- 로깅, 헬스 체크, CQRS, 클린 아키텍쳐, 단위 테스트
+---
 
 # CHAP2. 웹 개발 기초 지식
 
 ## 2.1 웹 프레임워크
+---
+from. sunman
+- 자주 사용되는 동작을 정해진 방법과 추상화된 인터페이스로 제공
+---
 ```
 SPA는 Single Page Application의 약자로, 단일 HTML 페이지로 구성된 웹 애플리케이션을 의미합니다. 아래는 SPA의 주요 특징과 장점입니다:
 
@@ -66,6 +85,11 @@ SPA를 구현하는 대표적인 프레임워크로는 React, Vue.js, Angular �
 ```
 ## 2.2 Node.js
 - 단일 스레드에서 구돵되는 논블로킹 I/O 이벤트 기반 비동기 방식
+---
+from. sunman
+- Nodejs 2009년 릴리즈
+- 2008년 크롬 브라우저 자바스크립트 엔진 V8 이후 JS 성능 개선
+---
 ## 2.3 이벤트 루프
 - 타이머 > 대기콜백 > 유휴,준비 > 폴 > 체크 > 종료 콜백
 ## 2.4 패키지 의존성 관리
