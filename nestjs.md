@@ -85,6 +85,7 @@ SPA를 구현하는 대표적인 프레임워크로는 React, Vue.js, Angular �
 ```
 ## 2.2 Node.js
 - 단일 스레드에서 구돵되는 논블로킹 I/O 이벤트 기반 비동기 방식
+- 우리는 팟 하나에 4개의 인스턴스
 ---
 from. sunman
 - Nodejs 2009년 릴리즈
