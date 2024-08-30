@@ -130,6 +130,14 @@ from. sunman
 - package.json 1.2.3-beta ([Major].[Minor].[Patch]-[label]
 - package-lock.json : package.json에 선언된 패키지들이 설치될 떼 정확한 버전과 서로간의 의존성을 표현
 ## 2.5 타입스크립트
+---
+from. sunman
+- 정적 프로그램 분석
+- 함수 타입 (일급 함수)
+  - 함수를 변수에 할당
+  - 다른 함수의 인수로 함수 전달
+  - 함수의 결과로 함수 반환
+---
 ## 2.6 데커레이터
 - 횡단 관심사 적용
 - 자바 어노테이션과 유사
@@ -144,5 +152,301 @@ from. sunman
 - 접근자 데커레이터
 - 속성 데커레이터
 - 메게변수 데커레이터
+
+---
+from. sunman
+- 횡단 관심사를 분리, 관점 지향 프로그래밍
+
+---
+
+#### ✅ 인수 없는 데코레이터 기본 예시
+
+```ts
+function deco(
+  target: any,
+  propertyKey: string,
+  discriptor: PropertyDescriptor
+) {
+  console.log("run deco");
+}
+
+class TestClass {
+  @deco
+  test() {
+    console.log("run test");
+  }
+}
+
+const t = new TestClass();
+t.test();
+```
+
+---
+
+#### ✅ 인수 있는 데코레이터 기본 예시
+
+```ts
+function deco(value: string) {
+  console.log("run deco");
+  return function (
+    target: any,
+    propertyKey: string,
+    discriptor: PropertyDescriptor
+  ) {
+    console.log(value);
+  };
+}
+
+class TestClass {
+  @deco("HELLO")
+  test() {
+    console.log("run test");
+  }
+}
+
+const t = new TestClass();
+t.test();
+```
+
+---
+
+#### ✅ 데커레이터 합성
+
+1. 각데커레이터는 위에서 아래로 평가
+2. 결과는 아래에서 위로 함수를 호출
+
+---
+
+#### ✅ 데커레이터 합성 예시
+
+```ts
+function first(value: string) {
+  // second
+  console.log("first evaluated"); // second
+  return function (
+    target: any,
+    propertyKey: string,
+    discriptor: PropertyDescriptor
+  ) {
+    console.log("first called"); // second
+  };
+}
+
+class TestClass {
+  @first()
+  @second()
+  test() {
+    console.log("run test");
+  }
+}
+
+// first evaluated
+// second evaluated
+// second callsed
+// first callsed
+// run test
+```
+
+---
+
+#### ✅ 클래스 데커레이터
+
+```ts
+function reportableClassDecorator<T extends {new (...args: any[]): {}}>(constructor:T){
+    return class extends constructor [ // 생성자를 리턴
+        reportingURL = "http://www.naver.com"
+    ]
+}
+
+@reportableClassDecorator
+class BugReport {
+    type="report"
+    title: string;
+    constructor(t:string){
+        this.title = t;
+    }
+}
+
+const bug = new BugReport("Needs dark mode")
+console.log(bug)
+// {type: 'report', title: "Needs dark mode", reportingURL: "http://www.naver.com"}
+```
+
+---
+
+#### ✅ 메서드 데커레이터
+
+- 갖는 세 개의 인수
+
+  1. 정적 멤버가 속한 클래스의 생성자 함수이거나 인스턴스 멤버에 대한 클래스의 프로토타입
+  2. 멤버의 이름
+  3. 멤버의 속성 설명자. PropertyDescriptor 타입을 가짐
+
+---
+
+#### ✅ 메서드 데커레이터 예시
+
+```ts
+function HandleError() {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    const method = descriptor.value;
+    descriptor.value = function () {
+      try {
+        method();
+      } catch (e) {
+        // 에러 핸들링 로직 구현
+        console.log(e);
+      }
+    };
+  };
+}
+
+class Greetor {
+  @HandleError()
+  hello() {
+    throw new Error("Test");
+  }
+}
+
+const t = new Greetor();
+t.hello();
+```
+
+---
+
+#### ✅ 접근자 데커레이터
+
+```ts
+function Enumerable(enumerable: boolean) {
+  return function (target, propertyKey, descriptor) {
+    descriptor.enumerable = enumerable;
+  };
+}
+
+class Person {
+  constructor(private name: string) {}
+
+  @Enumerable(true)
+  get getName() {
+    return this.name;
+  }
+
+  @Enumerable(false)
+  set setName(name: string) {
+    this.name = name;
+  }
+}
+
+const person = new Person("james");
+for (let key in person) {
+  console.log(`${key}: ${person[key]}`);
+  // name, getName 출력 - setName은 미출력
+}
+```
+
+---
+
+#### ✅ 속성 데커레이터
+
+- 갖는 두 개의 인수
+
+  1. 정적 멤버가 속한 클래스의 생성자 함수이거나 인스턴스 멤버에 대한 클래스의 프로토타입
+  2. 멤버의 이름
+
+---
+
+#### ✅ 속성 데커레이터 예시
+
+```ts
+function format(formatString: boolean) {
+  return function (target, propertyKey) {
+    let value = target[propertyKey];
+
+    function getter() {
+      return `${formatString} ${value}`;
+    }
+
+    function setter(newVal: string) {
+      value = newVal;
+    }
+
+    return {
+      get: getter,
+      set: setter,
+      enumerable: true,
+      configurable: true,
+    };
+  };
+}
+
+class Greeter {
+  @format("Hello")
+  greeting: string;
+}
+
+const t = new Greeter();
+t.greeting = "World";
+console.log(t.greeting()); // Hello World
+```
+
+---
+
+#### ✅ 매개변수 데커레이터
+
+- 갖는 두 개의 인수
+
+  1. 정적 멤버가 속한 클래스의 생성자 함수이거나 인스턴스 멤버에 대한 클래스의 프로토타입
+  2. 멤버의 이름
+  3. 매개변수가 함수에서 몇 번째 위치에 선언되었는지를 나타내는 인덱스
+
+---
+
+#### ✅ 매개변수 데커레이터 예시
+
+```ts
+import {BadRequestException} from "@nestjs/common"
+
+function MinLength(min: number){
+    return funtion (target, propertyKey, parameterIndex){
+        target.validators = {
+            minLength: function (args: string[]){
+                return args[parameterIndex].length >= min
+            }
+        }
+    }
+}
+
+function Validate(target, propertyKey, descriptor){
+    const method = descriptor.value
+
+    descriptor.value = function(...args){
+        Object.keys(target.validators).forEach(key => {
+            if (!target.validators[key](args)){
+                throw new BadRequestException()
+            }
+        })
+        method.apply(this.args)
+    }
+}
+
+class User {
+    private name: string;
+
+    @Validate
+    setName(@MinLength(3) name: string){
+        this.name = name
+    }
+}
+
+const t = new User();
+t.setName('123456')
+console.log('---')
+t.setName('12')
+```
+---
 
 # CHAP3. 애플리케이션의 관문: 인터페이스
