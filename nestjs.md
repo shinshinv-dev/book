@@ -92,6 +92,40 @@ from. sunman
 ---
 ## 2.3 이벤트 루프
 - 타이머 > 대기콜백 > 유휴,준비 > 폴 > 체크 > 종료 콜백
+---
+from. sunman
+- 이벤트 루프는 커널에서 가능한 작업은 커널에 이관
+#### ✅ 타이머 단계
+
+- `setTimeout`, `setInterval` 과 같은 함수들을 큐에 넣고 실행
+- `now - registeredTime >= delta` 인 타이머들이 큐에 들어감
+
+#### ✅ 대기 콜백 단계
+
+- pending 큐에 들어 있는 콜백들은 현재 돌고 있는 루프 이전의 작업에서 큐에 들어온 콜백
+
+#### ✅ 유휴, 중비 단계
+
+- 유휴 단계는 매 틱마다 실행
+- 준비 단계는 매 폴링 직전에 실행
+
+---
+
+#### ✅ 폴 단계 (가장 중욯나 단계)
+
+- watch 큐
+- 새로운 I/O 이벤트르 ㄹ가져와서 관련 콜백 수행
+
+#### ✅ 체크 단계
+
+- setImmediate의 콜백만을 위한 단계
+
+#### ✅ 종료 콜백 단계
+
+- `close`나 `destroy` 이벤트 타입의 콜백이 처리
+
+### 🎁 [자바스크립트 비동기와 이벤트 루프](https://inpa.tistory.com/entry/%F0%9F%94%84-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%A3%A8%ED%94%84-%EA%B5%AC%EC%A1%B0-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC)
+---
 ## 2.4 패키지 의존성 관리
 - package.json 1.2.3-beta ([Major].[Minor].[Patch]-[label]
 - package-lock.json : package.json에 선언된 패키지들이 설치될 떼 정확한 버전과 서로간의 의존성을 표현
