@@ -499,6 +499,8 @@ export class DemoModule {}
 ```
 ### 4.2.2 속성 기반 주입
 ![IMG_2872](https://github.com/user-attachments/assets/274a12bf-bd07-4374-bcc3-6990bae37689)
-
+```
+@Inject(ServiceA) private readonly serviceA: ServiceA;
+```
 
 
