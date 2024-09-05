@@ -516,4 +516,41 @@ export class ServiceA {
 ```
 - 위의 코드에서 ServiceA는 요청 범위(request scope)를 가진 서비스로 등록됩니다. 이는 각각의 요청에 대해 새로운 인스턴스가 생성되는 것을 의미합니다.
 
+## 4.3 유저 서비스에 회원 가입 로지 구현하기
+### 4.3.1 UserService 프로바이더 생성
+```
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { UsersService } from './users/users.service';
+
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService, UsersService],
+})
+export class AppModule {}
+```
+### 4.3.2 회원가입
+- Controller
+```
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  async createUser(@Body() dto: CreateUserDto): Promise<void> {
+    const {name, email, password} = dto;
+    await this.usersService.createUser(name, email, password);
+  }
+}
+```
+1. 가입유저 존재 검사
+2. 유저 DB 저장 / 유효기간 있는 토큰 생성
+3. 회원가입 이메일 발송
+
+### 4.3.3 회원 가입 이메일 발송
+- EmailService 프로바이더 생성
+- UserService 에 EmailService 주입
+
+
 
