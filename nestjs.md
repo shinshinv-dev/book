@@ -502,5 +502,18 @@ export class DemoModule {}
 ```
 @Inject(ServiceA) private readonly serviceA: ServiceA;
 ```
+- @Injectable() 데코레이터는 NestJS에서 제공하는 데코레이터로, 클래스를 NestJS의 의존성 주입(DI) 시스템에 등록합니다. 이 데코레이터는 일반적으로 아무런 인자 없이 사용됩니다.
+- 그러나, @Injectable() 데코레이터는 선택적으로 Scope 인자를 받을 수 있습니다. 이는 서비스의 범위(scope)를 지정하는데 사용되며, DEFAULT, REQUEST, TRANSIENT 중 하나의 값을 가질 수 있습니다.
+```
+import { Injectable, Scope } from "@nestjs/common";
+
+@Injectable({ scope: Scope.REQUEST })
+export class ServiceA {
+  getHello(): string {
+    return 'Hello A'
+  }
+}
+```
+- 위의 코드에서 ServiceA는 요청 범위(request scope)를 가진 서비스로 등록됩니다. 이는 각각의 요청에 대해 새로운 인스턴스가 생성되는 것을 의미합니다.
 
 
