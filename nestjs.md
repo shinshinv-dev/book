@@ -552,5 +552,79 @@ export class UsersController {
 - EmailService 프로바이더 생성
 - UserService 에 EmailService 주입
 
+### 4.3.4 이메일 인증
+- UserService 에 verifyEmail 메소드 생성
+
+### 4.3.5 로그인
+- UserSerice 에 login 메소드 생성
+### 4.3.6 유저 정보 조회
+- UserSerice 에 getUserInfo 메소드 생성
+
+## 쉬어가는 페이지 - 스코프
+참고 - https://velog.io/@hing/NestJS-%EA%B3%B5%EC%8B%9D-%EB%AC%B8%EC%84%9C-Injection-scopes
+- DEFAULT : 싱글턴 인스턴스가 전체 어플리케이션
+- REQUEST : 요청마다 인스턴스 생성
+- TRANSIENT : 인스턴스가 공유되지 않음
+  - 가능하면 DEFAULT 권장 - 인스턴스를 캐시할수 있고 초기화가 한번 발생하므로 메모리와 동작 성능을 향상
+--- 
+gpt
+- 싱글톤 스코프 (기본 값)
+  - 기본적인 사용 시나리오: 대부분의 경우, 서비스와 컨트롤러는 상태를 유지하지 않거나, 모든 요청에 대해 동일한 상태를 사용해야 할 때 적합합니다.
+  - 장점: 메모리 사용이 적고, 성능이 좋습니다.
+- 요청 스코프 (Request Scope)
+  - 필요성: 각 요청마다 새로운 인스턴스가 생성되어야 할 때 사용합니다. 예를 들어, 요청마다 다른 사용자 컨텍스트가 필요하거나, 요청의 상태를 독립적으로 유지해야 하는 경우입니다.
+  - 예시: 인증 및 권한 검사, 요청에 따라 다른 데이터를 처리할 때.
+  - 단점: 각 요청마다 새로운 인스턴스가 생성되므로 메모리 사용이 증가하고, 성능이 다소 저하될 수 있습니다.
+- 트랜지언트 스코프 (Transient Scope)
+  - 필요성: 동일한 요청 내에서도 여러 인스턴스가 필요할 때 사용합니다. 트랜지언트 스코프를 가진 프로바이더는 주입될 때마다 새로운 인스턴스를 생성합니다.
+  - 예시: 특정 비즈니스 로직이 특정 의존성을 여러 번 인스턴스화해야 하는 경우.
+  - 단점: 메모리 사용과 성능에 영향을 미칠 수 있으므로, 필요한 경우에만 신중하게 사용해야 합니다.
+---
+
+### 프로바이더에 스코프 적용하기
+```
+@Injectable({ scope: Scope.REQUEST })
+```
+### 컨트롤러에 스코프 적용하기
+```
+@Controller({
+  path: 'cats',
+  scope: Scope.REQUEST
+})
+```
+
+### 스코프 계층
+- 연관된 컴포넌트들이 다른 스코프를 가지게 된다면?
+  - 1.DEFAULT -> 2.REQUEST -> 3.DEFALUT : 1번이 2번에 의존적이기 때문에 REQUEST, 3번은 2번에 의존하지 않기 때문에 DEFALUT, 그럼 2번은 3번에 의존하는데? 범위가 작아서?
+ 
+## 커스텀 프로바이더
+- 사용 필요
+  1. Nest 프레임워크 말고 직접 생성하고 싶은경우 ?
+  2. 여러클래스의 의존관계에 있을때 이미 존재하는 클래스를 재사용하고자 할때 ?
+  3. 테스트를 위해 모의 버전으로 프로바이더를 재정의하는 경우
+### 밸류 프로바이더
+- provide, useVlaue 속성을 가짐
+```
+providers: [{
+  provide: CatService,
+  useValue: mockCatsService
+}]
+```
+### 클래스 프로바이더
+- 인스턴스를 동적으로 구성
+- provide, useClass 사용
+
+### 팩터리 프로바이더
+- 역시 인스턴스를 동적으로 구성
+- provide, useFactory
+
+### 프로바이더 내보내기
+```
+providers: [connectionFactory],
+exports: [connectionFactory] || export ['CONNECTION']
+```
+
+ 
+
 
 
