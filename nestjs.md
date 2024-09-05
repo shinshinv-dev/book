@@ -479,4 +479,26 @@ t.setName('12')
 - 비즈니스 로직을 수행하는 역할
 - 프로바이더는 service, repository, factory, helper 등 여러가지 형태로 구현
 - Nest에서 제공하는 프로바더의 핵심은 의존성 주입(DI)
+- @Injectable() 데코레이터로 다른 Nest 컴포넌트에서 주입할 수 있는 프로바이더가 됨
+- 별도의 스코프를 지정해 주지 않으면 싱글턴 인스턴스가 생성됨
+  - 별도의 스코프?
+ 
+## 4.2 프로바이더 등록과 사용
+### 4.2.1 프로바이더 등록
+```
+@Module({
+  imports: [
+    MongooseModule.forFeature(models, MongoConnections.SERVICE),
+    ElasticSearchUtilModule.forFeature([IndexNames.DEMO]),
+  ],
+  controllers: [],
+  exports: [DemoService],
+  providers: [DemoResolver, DemoService, DemoMongodbRepository, DemoElasticsearchRepository, DemoRedisRepository],
+})
+export class DemoModule {}
+```
+### 4.2.2 속성 기반 주입
+![IMG_2872](https://github.com/user-attachments/assets/274a12bf-bd07-4374-bcc3-6990bae37689)
+
+
 
