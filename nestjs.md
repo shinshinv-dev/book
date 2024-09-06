@@ -457,6 +457,9 @@ t.setName('12')
 ## 3.1 컨트롤러
 - 컨트롤러 : 들어오는 요청을 받고 처리된 결과를 응답으로 돌려주는 인터페이스 역할
   - 엔드포인트 라우팅 매커니증을 통해 각 컨트롤러가 받을 수 있는 요청을 분류
+```
+$nest g resource [name]
+```
 ### 3.1.1 라우팅
 - @Controller 데커레이터 사용
 ### 3.1.2 와일드카드 사용
@@ -468,15 +471,18 @@ t.setName('12')
 - @HttpCode
 ### 3.1.5 헤더
 - @Header
+- ? 동적으로 하는 방법은 ? @Res 객체
 ### 3.1.6 리다이렉션
 - @Redirect
 ### 3.1.7 라우트 매개변수
-- @Param
+- @Param == PathVariable
 ### 3.1.8 하위 도메인 라우팅
 - @Controller({host: 'flight-reservation.naver.com'})
 ### 3.1.9 페이로드 다루기
 - @Body
-
+---
+@Query Vs @Param 차이점 확인
+---
 ## 3.2 유저 서비스의 인터페이스
 
 # CHAP4. 핵심 도메인 로직을 포함하는 프로바이더
@@ -509,7 +515,7 @@ export class DemoModule {}
 ```
 - @Injectable() 데코레이터는 NestJS에서 제공하는 데코레이터로, 클래스를 NestJS의 의존성 주입(DI) 시스템에 등록합니다. 이 데코레이터는 일반적으로 아무런 인자 없이 사용됩니다.
 - 그러나, @Injectable() 데코레이터는 선택적으로 Scope 인자를 받을 수 있습니다. 이는 서비스의 범위(scope)를 지정하는데 사용되며, DEFAULT, REQUEST, TRANSIENT 중 하나의 값을 가질 수 있습니다.
-```
+```ts
 import { Injectable, Scope } from "@nestjs/common";
 
 @Injectable({ scope: Scope.REQUEST })
