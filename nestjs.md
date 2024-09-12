@@ -635,7 +635,35 @@ providers: [connectionFactory],
 exports: [connectionFactory] || export ['CONNECTION']
 ```
 
- 
+# CHAP5. SW 복잡도를 낮추기 위한 모듈 설계
+
+## 5.1 모듈:응집성 있는 설계
+- 모듈을 나누는 이유는 책임을 나누고 응집도를 높이기 위함
+- @Module 데커레이터 사용
+  - import: 해당 모듈에서 사용하기 위해 다른 모듈을 가져옴
+  - controller / providers: 컨트롤로와 프로바이더를 사용하기 위해 객체를 생성하고 주입
+  - export: 다른 모듈에서 사용할수 있도록 내보냄
+### 5.1.1 모듈 다시 내보내기
+### 5.1.2 전역모듈
+- @Global 데커레이터 사용
+  - 남발하면 응집도가 떨어짐
+
+## 5.2 유저서비스의 모듈 분리
+### 5.2.1 UsersModule 분리
+### 5.2.2 EmailModule 분리
+
+# CHAP6. 동적 모듈을 활용한 환경 변수 구성
+## 6.1 동적모듈
+## 6.2 dotenv를 이용한 Config 설정
+- dotenv 라이브러리 : 각 환경변수를 .env 에 저장
+## 6.3 Nest 에서 제공하는 Config 패키지
+- @nestjs/config 패키지 제공
+## 6.4 유저 서비스에 환경 변수 구성하기
+### 6.4.1 커스텀 Config 파일 작성
+### 6.4.2 동적 ConfigModule 등록
+
+
+
 
 
 
