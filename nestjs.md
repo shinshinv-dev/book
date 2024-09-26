@@ -662,7 +662,40 @@ exports: [connectionFactory] || export ['CONNECTION']
 ### 6.4.1 커스텀 Config 파일 작성
 ### 6.4.2 동적 ConfigModule 등록
 
+# CHAP7. 파이프와 유효성 검사
+## 7.1 파이프
+- 파이프 : 요청이 라우터 핸들러로 전달되기 전에 요청 객체를 변환할 수 있는 기회를 제공
+  - 변환
+  - 유효성 검사
+- 내장 파이프
 
+## 7.2 파이프의 내부 구현 이해하기
+- 커스텀파이프 - PipeTransfrom implement
+- transfrom 
+  - value: 현재 파이프에 전달된 인수
+  - metadata : 현재 파이프에 전달된 인수의 메타데이터
+    - type
+    - metatype
+    - data
+
+## 7.3 유효성 검사 파이프 만들기
+- class-validator
+- class-transformer
+
+## 7.4 유저 서비스에 유효성 검사 적용하기
+### 7.4.1 유저 생성 본문 유효성 검사
+### 7.4.2 class-transfomer 활용
+- @Transform
+### 7.4.3 커스텀 유효성 검사기 작성
+
+# CHAP8. 영속화: 데이터 기록하기 다루기
+## 8.1 MySQL 데이터베이스 설정
+## 8.2 TypeORM으로 데이터베이스 연결
+## 8.3 회원 가입을 요청한 유저의 정보 저장하기
+## 8.4 트랜잭션 적용
+### 8.4.1 QueryRunner를 사용하는 방법
+### 8.4.2 transaction 함수를 직접 이용하는 방법
+## 8.5 마이그레이션
 
 
 
