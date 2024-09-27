@@ -690,8 +690,10 @@ exports: [connectionFactory] || export ['CONNECTION']
 
 # CHAP8. 영속화: 데이터 기록하기 다루기
 ## 8.1 MySQL 데이터베이스 설정
+- ORM
 ## 8.2 TypeORM으로 데이터베이스 연결
 ## 8.3 회원 가입을 요청한 유저의 정보 저장하기
+- 엔티티 작성방법
 ## 8.4 트랜잭션 적용
 ### 8.4.1 QueryRunner를 사용하는 방법
 ### 8.4.2 transaction 함수를 직접 이용하는 방법
