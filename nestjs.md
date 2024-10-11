@@ -740,6 +740,8 @@ exports: [connectionFactory] || export ['CONNECTION']
 ## 10.4 JWT
 - 헤더, 페이로드, 시그니처 3가지 요소
 ### 10.4.1 헤더
+- type : 미디어 타입
+- alg : 암오화 알고리즘
 ### 10.4.2 페이로드
 ### 10.4.3 시그니처
 ## 10.5 유저 서비스의 이메일 인증 처리와 JWT 발급
@@ -751,12 +753,35 @@ exports: [connectionFactory] || export ['CONNECTION']
 ## [쉬어가는 페이지] 슬라이딩 세션과 리프레시 토큰
 - 토큰을 탈취할경우 무효화 못하는 취약점
 - 그래서 토큰의 유효기간을 짧게
+- 사용이유 : 탈취를 방지하고자 토큰 유효기간을 짧게하면 할때마다 로그인 하여 불편함 
 - 슬라이딩 세션은 현재 토큰을 새로운 토큰으로 갱신해줌
-- 사용자가 로그인하는 과정을 대신해줄 리프레시 토큰
+- 사용자가 로그인하는 과정을 대신해줄 리프레시 토큰, 만료될 경우 이것을 사용하여 재발급
 - 액세스토큰, 리프레시토큰 두개를 발급
+- 결국엔 탈취된걸 알았을때 리프레쉬 토큰을 삭재햐여 무효화 시키는게 포인트 하지만 DB 에서 관리해야함.
 
 ## [심화학습2] 커스텀 매개변수 데커레이터
+- 내장 데커리이터는 Express 객체와 대응됨
+- 가드를 통한 인증/인가 과정에서 요청객체에 추가 정보를 실을수 있음
+- 컨트롤러에서 직접 받을수 있는 @User 커스텀 데코레이터를 만들어보자
+- createParamDecorator 팩터리 데커레이터를 이용하여 만듬
+- 첫번째 인수 data를 활용하는 방법, @UserData('name') 처럼 특정한 값만 받고 싶을때
+- ValidationPipe 적용 > class-validator 사용 > ValidationPipe 적용
+  - ? class-validator 만 사용하면 안되나?
+  - 보통 글로벌로 app.useGlobalPipes(new ValidationPipe()) 이렇게 선언함
+- applyDecorators 로 여러 종류의 데코레이터 함성 가능
+  
 ## [심화학습3] 메타데이터(Reflection 클래스)
+- 다른 커스텀 데커레이터 사용방법
+- 메타데이터를 @SetMetadata 로 지정가능
+  - SetMetadata: 메타데이터를 키와 값으로 받아 CustomDecorator 타입으로 돌려줌
+- Nest 메타데이터를 다루기 위한 헬퍼 클래스로 Reflector 클래스를 제공
+  - Reflector 를 이용하여 메타데이터를 읽음
+  - 요청할 메서드에서 메타 데이터를 읽어옴
+  - Reflector 를 사용하면 주입받아야하므로 전역으로 사용할 없고 컨트롤러에 선언하거나 커스텀 프로바이더로 제공 해야함
+  - 클래스에도 적용가능(상위 레벨)
+- Reflector 는 클래스(context.getClass) + 메소드(context.getHandler) 로 사용가능
+  
+
 
 
 
