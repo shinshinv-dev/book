@@ -810,6 +810,29 @@ exports: [connectionFactory] || export ['CONNECTION']
 - @Catch
 - @UseFilters
 12.3 유저서비스에 예외 필터 적용하기
+
+
+
+# CHAP15 헬스체크
+> 우리서비스에는 Mongodb Health Check 가 적용되어 있음
+## 15.1 Terminus 적용
+## 15.2 헬스 체크
+- @HealthCheck() 적용
+- HealthCheckService, HttpHealthIndicator
+## 15.3 TypeOrm 헬스체크
+## 15.4 커스텀 상태 표시기
+- HealthIndicator
+
+# CHAP16 CQRS를 이용한 관심사 분리
+## 16.1 CQRS 패턴
+- 커맨드와 쿼리를 분리
+## 16.2 유저 서비스에 CQRS 적용하기
+- nestjs/cqrs 제공
+### 16.2.1 커맨드
+### 16.2.2 이벤트
+### 16.2.3 쿼리
+
+
   
 
 
