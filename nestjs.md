@@ -10,7 +10,7 @@ from. sunman
   - 일정하지 않은 소프트웨어 품질
   - 라이브러리 검색 부담
 - NestJS의 특징
-  - 모듈/컴포넌트 기반, IoC, DI, AOP, Typescript
+  - 모듈/컴포넌트 기반, IoC, DI, AOP, Typescript 
 ---
 ```
 - CQRS
@@ -833,6 +833,13 @@ exports: [connectionFactory] || export ['CONNECTION']
 ### 16.2.3 쿼리
 
 
+# CHAP17 클린아케텍쳐
+
+## 17.3 유저서비스에 클린 아키텍처 적용하기
+- User를 도메인 객체로 하고 UserFactory 를 만들어서 User를 생성하고 eventBus 로 이메일을 보낸다.
+- 다음으로 비즈니스로직이 구현되는 Application 레이어
+- DTO 있는 interface 레이어
+- Repository 가 있는 infra 레이어
   
 
 
