@@ -115,6 +115,26 @@
 - 애저 코스모스 DB
 - MS SQL 서버
 - 기타 외부 데이터 소스
+## 데이터 프레임 및 스파크 SQL 고차 함수
+- 방법1 : 분해 및 수집
+- 방법2 : 사용자 정의 함수
+- 위 방법은 잠재적으로 비용이 많이 드는 기술이고 내장함수를 사용해서 대체
+  - 배열 유형 함수 - array_distinct
+  - 맵 함수 - map_concat
+- 고차 함수 : 익명 람다 함수를 인수로 사용
+  - transform()
+  - filter()
+  - exists()
+  - aggregate()
+## 일반적인 데이터 프레임 및 스파크 SQL 작업
+- Union
+- Join
+- 윈도우
+- 수정 - withColumn, drop, withColumnRenamed
+
+ 
+
+
 
 
 
